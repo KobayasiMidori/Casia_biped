@@ -537,8 +537,8 @@
                         obj.q3 = obj.q3_0;
                         obj.q8 = obj.q8_0;
                         if abs(TraData.state_march_real - 5) < 0.1%stop march
-                            obj.x_r = Ramp(0.025, obj.x_r, 0.018/0.4*obj.Ts); %为了停止稳定
-                            obj.x_l = Ramp(0.025, obj.x_l, 0.018/0.4*obj.Ts);
+                            obj.x_r = Ramp(0.023, obj.x_r, 0.018/0.4*obj.Ts); %为了停止稳定
+                            obj.x_l = Ramp(0.023, obj.x_l, 0.018/0.4*obj.Ts);
                             obj.p_r = pid_out(4,3) + obj.p_r_0;
                             obj.p_l = pid_out(4,6) + obj.p_l_0;
                             obj.z_r = obj.z_r_0;
