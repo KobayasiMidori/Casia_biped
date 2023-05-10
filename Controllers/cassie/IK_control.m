@@ -479,8 +479,8 @@
                         sl_f = [obj.z_l_0,obj.z_l_0,ff,ff];
                         delta_zr_IK1_tgt = TraData.IK_dst(2) / cos(obj.IK1) - TraData.IK_dst(2); 
                         obj.delta_zr_IK1 = 0;%Ramp(delta_zr_IK1_tgt, obj.delta_zr_IK1, 0.01/0.05*obj.Ts);
-                        obj.z_r = obj.z_r_0 + pid_out(4,16) + obj.delta_zr_IK1;
-                        obj.z_l = bezier(sl_f,obj.ss);                      
+                        obj.z_r = obj.z_r_0 + pid_out(4,16) + obj.delta_zr_IK1 + pid_out(2);
+                        obj.z_l = bezier(sl_f,obj.ss) + pid_out(5);                      
 %                         obj.IK6 = 初始值：obj.IK6_0  目标值：pid_out(4,8);
                     elseif  abs(TraData.state_march_real - 1) < 0.1   %右腿切到摆动腿
                         if abs(obj.state_march_real_pre - 1) > 0.1
@@ -520,8 +520,8 @@
                         sl_f = [obj.z_r_0,obj.z_r_0,ff,ff];
                         delta_zl_IK6_tgt = TraData.IK_dst(5) / cos(obj.IK6) - TraData.IK_dst(5); 
                         obj.delta_zl_IK6 = 0;%Ramp(delta_zl_IK6_tgt, obj.delta_zl_IK6, 0.01/0.05*obj.Ts);
-                        obj.z_r = bezier(sl_f,obj.ss);
-                        obj.z_l = obj.z_l_0 + pid_out(4,17) + obj.delta_zl_IK6 + pid_out(4,2);
+                        obj.z_r = bezier(sl_f,obj.ss) + pid_out(4,2);
+                        obj.z_l = obj.z_l_0 + pid_out(4,17) + obj.delta_zl_IK6 + pid_out(4,5);
 %                         obj.IK1 =初始值： obj.IK1_0 目标值： pid_out(4,8);
                     elseif abs(TraData.state_march_real) < 0.1
                         obj.p_r = pid_out(4,3);
