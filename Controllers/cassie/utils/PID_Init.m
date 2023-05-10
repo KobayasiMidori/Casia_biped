@@ -18,7 +18,7 @@ function [dead_zone, limit, slop, sign] = PID_Init(Num_pid)
     %                    =====================================================================
     %                    |           1             |             2             |           3            |            4             |             5             | 
     %                    |        pitch_xr         |           roll_zr         |        pitch_pr        |         pitch_xl         |           roll_zl         |
-    limit_val(2,1:5) =   [          0.1       ,                0.008       ,          deg2rad(10)       ,         0.1       ,                 0.008           ];
+    limit_val(2,1:5) =   [          0.1       ,                0.006       ,          deg2rad(10)       ,         0.1       ,                 0.006           ];
     %                    |           6             |              7            |           8            |            9             |             10            |          
     %                    |         pitch_pl        |           roll_st         |          y yv          |           y_yp           |           x_xv            |
     limit_val(2,6:10) = [         deg2rad(10)       ,     deg2rad(7)        ,           deg2rad(10)       ,      deg2rad(1.2)       ,             0.15             ]; 
