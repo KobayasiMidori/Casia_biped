@@ -36,6 +36,8 @@ function [PIDval, PIDval_pre ,integral, errPre, filter_pre]...
         if  abs(state_march_real - (-1)) < 0.1 ||abs(state_march_real)< 0.1||abs(state_march_real - 5) < 0.1
             pid_Ena(op_Index) = -1*ones(op_end - op_start,1);
         elseif  abs(state_march_real - 3) < 0.1 || abs(state_march_real - 4) < 0.1   
+            pid_Ena(2) = 0;
+            pid_Ena(5) = 0;
             pid_Ena(op_Index) = zeros(1,length(op_Index));
 %             pid_Ena(2) = -2;
 %             pid_Ena(5) = -2;            

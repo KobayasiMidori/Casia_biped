@@ -521,7 +521,7 @@
                         delta_zl_IK6_tgt = TraData.IK_dst(5) / cos(obj.IK6) - TraData.IK_dst(5); 
                         obj.delta_zl_IK6 = 0;%Ramp(delta_zl_IK6_tgt, obj.delta_zl_IK6, 0.01/0.05*obj.Ts);
                         obj.z_r = bezier(sl_f,obj.ss);
-                        obj.z_l = obj.z_l_0 + pid_out(4,17) + obj.delta_zl_IK6;
+                        obj.z_l = obj.z_l_0 + pid_out(4,17) + obj.delta_zl_IK6 + pid_out(4,2);
 %                         obj.IK1 =初始值： obj.IK1_0 目标值： pid_out(4,8);
                     elseif abs(TraData.state_march_real) < 0.1
                         obj.p_r = pid_out(4,3);
@@ -569,10 +569,10 @@
                     obj.actor_dst_rlt(6) = Limit(obj.actor_dst_rlt(6), deg2rad(-6), deg2rad(15));
                     obj.actor_dst_rlt(7) = obj.IK7 + TraData.IK_ry(2,2);
                     obj.xr_dst = TraData.IK_dst(1) + pid_out(4,1) + obj.x_r;
-                    obj.zr_dst = TraData.IK_dst(2)+pid_out(4,2) + obj.z_r + obj.delta_zr + roll_step;%
+                    obj.zr_dst = TraData.IK_dst(2) + obj.z_r + obj.delta_zr + roll_step;%
                     obj.pr_dst = TraData.IK_dst(3)+obj.p_r+foot_pitch_step;
                     obj.xl_dst = TraData.IK_dst(4) + pid_out(4,4) + obj.x_l;
-                    obj.zl_dst = TraData.IK_dst(5)+pid_out(4,5) + obj.z_l + obj.delta_zl - roll_step;%
+                    obj.zl_dst = TraData.IK_dst(5) + obj.z_l + obj.delta_zl - roll_step;%
                     obj.pl_dst = TraData.IK_dst(6)+obj.p_l+foot_pitch_step; 
                     
                     obj.xr_dst = Limit(obj.xr_dst, obj.IK_limit_low(1), obj.IK_limit_up(1));
