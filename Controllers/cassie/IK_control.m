@@ -45,6 +45,8 @@
     properties(Access = private)
         %right hip roll yaw pitch knee foot
         actor_dst_rlt = zeros(10,1);
+        actor_dst_rlt_pre = zeros(10,1);
+        actor_dst_rlt_vel = zeros(10,1);
         xr_dst = 0;
         zr_dst = 0;
         pr_dst = 0;
@@ -537,8 +539,8 @@
                         obj.q3 = obj.q3_0;
                         obj.q8 = obj.q8_0;
                         if abs(TraData.state_march_real - 5) < 0.1%stop march
-                            obj.x_r = Ramp(0.019, obj.x_r, 0.018/0.4*obj.Ts); %为了停止稳定
-                            obj.x_l = Ramp(0.019, obj.x_l, 0.018/0.4*obj.Ts);
+                            obj.x_r = Ramp(0.016, obj.x_r, 0.018/0.4*obj.Ts); %为了停止稳定
+                            obj.x_l = Ramp(0.016, obj.x_l, 0.018/0.4*obj.Ts);
                             obj.p_r = pid_out(4,3) + obj.p_r_0;
                             obj.p_l = pid_out(4,6) + obj.p_l_0;
                             obj.z_r = obj.z_r_0;
@@ -596,8 +598,11 @@
                     obj.p_r_pre = obj.p_r;
                     obj.p_l_pre = obj.p_l; 
                     obj.q3_pre = obj.q3;  
-                    obj.q8_pre = obj.q8;                    
+                    obj.q8_pre = obj.q8;                     
                 end
+%             for i = 1:10
+%                 obj.actor_dst_rlt_pre(i) = obj.actor_dst_rlt(i);
+%             end
                 for i = 1:10
                      obj.out_current_cal(i) = obj.motor_p_gain(i)*(obj.actor_dst_rlt(i) - TraData.motor_position(i)) + obj.motor_d_gain(i)*(0.0 - TraData.motor_velocity(i));
                 end                
@@ -607,6 +612,9 @@
                 obj.out_current_cal(5) = 0.6*obj.out_current_cal(5);
                 obj.out_current_cal(10) = 0.6*obj.out_current_cal(10);
             end
+            
+
+            
            %%
             IkOut.pid_out = pid_out;
             IkOut.actor_dst_rlt = obj.actor_dst_rlt;

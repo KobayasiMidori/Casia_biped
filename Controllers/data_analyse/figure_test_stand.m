@@ -5,7 +5,7 @@ anc = 1;
 num_value = [14; 14; 10; 10; 5; 10; 10; 10; 3; 10; 10; 6; 1; 1; 3; 3; 20; 22; 1; 6; 1; 2; 4; 10];
 Index_value = zeros(length(num_value),1);
 Index_value(1) = 1;
-for i = 2:length(num_value)
+for i = 2:length(num_value) 
     Index_value(i) = Index_value(i-1) + num_value(i-1);
 end
 [~,num] = size(log_data.data);%86; 
