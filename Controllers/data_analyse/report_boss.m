@@ -100,8 +100,7 @@ xlabel('time (s)');
 ylabel('current (A)');
 title('left motor 5');
 
-figure;
-
+figure;%2
 subplot(3,5,1);
 yyaxis left
 plot(tt,log_data.data(10000:anc:end,1),'b-',...
@@ -263,7 +262,7 @@ grid on;
 legend('real','ref','state');
 title('left motor 5');
 
-figure;
+figure;%3
 subplot(2,3,1);
 yyaxis left;
 plot(tt,180/pi*(log_data.data(10000:anc:end,84)),'b-',...
@@ -271,7 +270,7 @@ plot(tt,180/pi*(log_data.data(10000:anc:end,84)),'b-',...
 xlabel('time (s)');
 ylabel('angle (deg)');    
 yyaxis right;
-plot(tt, log_data.data(10000:anc:end,114));
+plot(tt, log_data.data(10000:anc:end,114), 'm-');
 ylabel('state');
 grid on;
 legend('real','ref','state');
@@ -284,7 +283,7 @@ plot(tt,180/pi*(log_data.data(10000:anc:end,85)),'b-',...
 xlabel('time (s)');
 ylabel('angle (deg)');    
 yyaxis right;
-plot(tt, log_data.data(10000:anc:end,114));
+plot(tt, log_data.data(10000:anc:end,114), 'm-');
 ylabel('state');
 grid on;
 legend('real','ref','state');
@@ -297,13 +296,98 @@ plot(tt,180/pi*(log_data.data(10000:anc:end,86)),'b-',...
 xlabel('time (s)');
 ylabel('angle (deg)');    
 yyaxis right;
-plot(tt, log_data.data(10000:anc:end,114));
+plot(tt, log_data.data(10000:anc:end,114), 'm-');
 ylabel('state');
 grid on;
 legend('real','ref','state');
 title('IMU yaw');    
 
-figure;
+figure;%4
+subplot(2,3,1);
+yyaxis right;
+plot(tt,log_data.data(10000:anc:end,114),'m-');
+ylabel('state');
+yyaxis left;
+plot(tt,log_data.data(10000:anc:end,107),'g-',...
+        tt,log_data.data(10000:anc:end,201),'r-',...
+        tt,log_data.data(10000:anc:end,87),'b-');
+xlabel('time (s)');
+ylabel('x (m)');  
+grid on;
+legend('state','trajectory','ref','real');
+title('right foot position x (base link)');    
+
+subplot(2,3,2);
+yyaxis right;
+plot(tt,log_data.data(10000:anc:end,114),'m-');
+ylabel('state');
+yyaxis left;
+plot(tt,log_data.data(10000:anc:end,108),'g-',...
+        tt,log_data.data(10000:anc:end,205),'r-',...
+        tt,log_data.data(10000:anc:end,88),'b-');
+xlabel('time (s)');
+ylabel('z (m)');  
+grid on;
+legend('state','trajectory','ref','real');
+title('right foot position z (base link)');  
+
+subplot(2,3,3);
+yyaxis right;
+plot(tt,log_data.data(10000:anc:end,114),'m-');
+ylabel('state');
+yyaxis left;
+plot(tt,log_data.data(10000:anc:end,109),'g-',...
+        tt,log_data.data(10000:anc:end,207),'r-',...
+        tt,log_data.data(10000:anc:end,89),'b-');
+xlabel('time (s)');
+ylabel('p (rad)');  
+grid on;
+legend('state','trajectory','ref','real');
+title('right foot p (base link)');  
+
+subplot(2,3,4);
+yyaxis right;
+plot(tt,log_data.data(10000:anc:end,114),'m-');
+ylabel('state');
+yyaxis left;
+plot(tt,log_data.data(10000:anc:end,110),'g-',...
+        tt,log_data.data(10000:anc:end,202),'r-',...
+        tt,log_data.data(10000:anc:end,97),'b-');
+xlabel('time (s)');
+ylabel('x (m)');  
+grid on;
+legend('state','trajectory','ref','real');
+title('left foot position x (base link)');  
+
+subplot(2,3,5);
+yyaxis right;
+plot(tt,log_data.data(10000:anc:end,114),'m-');
+ylabel('state');
+yyaxis left;
+plot(tt,log_data.data(10000:anc:end,111),'g-',...
+        tt,log_data.data(10000:anc:end,206),'r-',...
+        tt,log_data.data(10000:anc:end,98),'b-');
+xlabel('time (s)');
+ylabel('z (m)');  
+grid on;
+legend('state','trajectory','ref','real');
+title('left foot position z (base link)');  
+
+subplot(2,3,6);
+yyaxis right;
+plot(tt,log_data.data(10000:anc:end,114),'m-');
+ylabel('state');
+yyaxis left;
+plot(tt,log_data.data(10000:anc:end,112),'g-',...
+        tt,log_data.data(10000:anc:end,208),'r-',...
+        tt,log_data.data(10000:anc:end,99),'b-');
+xlabel('time (s)');
+ylabel('p (rad)');  
+grid on;
+legend('state','trajectory','ref','real');
+title('left foot p (base link)');  
+
+figure;%5
 label_name = {'rz (m)' , 'rp (rad)' , 'lp (rad)' , 'st\_motor1 (rad)' , 'st\_motor3 (rad)' , 'st\_motor2 (rad)' , 'sw\_y (m)' , 'sw\_x (m)' , 'sw\_x (m)' , 'sw\_y (m)' , 'rz (m)' , 'lz (m)'};
 title_name={'rz\_roll\_pid' , 'rp\_pitch\_pid' , 'lp\_pitch\_pid' , 'st\_roll\_pid' , 'st\_pitch\_pid' , 'st\_yaw\_pid' , 'sw\_yv\_pid' , 'sw\_xv\_pid' , 'swx\_pitch\_pid' , 'swy\_roll\_pid' , 'rz\_zv\_pid' , 'lz\_zv\_pid'};
 Index = [      2,                 3,               6,              7,               13,            12,          8,          10,              18,              19,          16,        17   ];
@@ -319,7 +403,7 @@ for i = 1:12
     title(title_name{i});
 end
 
-figure;
+figure;%6
 subplot(2,3,1)
 yyaxis left
 plot(tt,log_data.data(10000:anc:end,115),'b-');
