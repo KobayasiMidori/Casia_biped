@@ -600,11 +600,15 @@
                     obj.q3_pre = obj.q3;  
                     obj.q8_pre = obj.q8;                     
                 end
-%             for i = 1:10
-%                 obj.actor_dst_rlt_pre(i) = obj.actor_dst_rlt(i);
-%             end
                 for i = 1:10
-                     obj.out_current_cal(i) = obj.motor_p_gain(i)*(obj.actor_dst_rlt(i) - TraData.motor_position(i)) + obj.motor_d_gain(i)*(0.0 - TraData.motor_velocity(i));
+                    if abs(obj.actor_dst_rlt_pre(i)) < 1e-9
+                        obj.actor_dst_rlt_vel(i) = (obj.actor_dst_rlt(i) - obj.actor_dst_rlt_pre(i))/obj.Ts;
+                    end
+                    obj.actor_dst_rlt_pre(i) = obj.actor_dst_rlt(i);
+                    obj.actor_dst_rlt_vel(i) = 0;
+                end
+                for i = 1:10
+                     obj.out_current_cal(i) = obj.motor_p_gain(i)*(obj.actor_dst_rlt(i) - TraData.motor_position(i)) + obj.motor_d_gain(i)*(obj.actor_dst_rlt_vel(i) - TraData.motor_velocity(i));
                 end                
             end
             if ( abs(TraData.state_march_real - 1) < 0.1 || abs(TraData.state_march_real - 2) < 0.1 || ...

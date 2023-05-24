@@ -172,12 +172,12 @@
               obj.motor_rated_current(1) = 65;
               obj.motor_rated_current(2) = 11.31;
               obj.motor_rated_current(3) = 65;
-              obj.motor_rated_current(4) = 65;
+              obj.motor_rated_current(4) = 67;
               obj.motor_rated_current(5) = 7.07;
               obj.motor_rated_current(6) = 65;
               obj.motor_rated_current(7) = 11.31;
               obj.motor_rated_current(8) = 65;
-              obj.motor_rated_current(9) = 65;
+              obj.motor_rated_current(9) = 67;
               obj.motor_rated_current(10) = 7.07;
 
               obj.motor_dir(1) = 1;
