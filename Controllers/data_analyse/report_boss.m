@@ -34,7 +34,7 @@ title('right motor 3');
 subplot(2,5,4);
 plot(tt,log_data.data(10000:anc:end,32),...
     tt,Torque2Current(log_data.data(10000:anc:end,57),4),...
-   tt,log_data.data(10000:anc:end,42) );
+   tt,log_data.data(10000:anc:end,42)/67*65);
 grid on;
 legend('dst (limited)','dst','real');
 xlabel('time (s)');
@@ -83,7 +83,7 @@ title('left motor 3');
 subplot(2,5,9);
 plot(tt,log_data.data(10000:anc:end,37),...
     tt,Torque2Current(log_data.data(10000:anc:end,62),9),...
-    tt,log_data.data(10000:anc:end,47));
+    tt,log_data.data(10000:anc:end,47)/67*65);
 grid on;
 legend('dst (limited)','dst','real');
 xlabel('time (s)');
