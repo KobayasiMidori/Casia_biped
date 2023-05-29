@@ -386,6 +386,9 @@
             user_data.con_remote = TraData.con_remote; %258-267
             user_data.battery = TraData.battery;%268-273
             user_data.IK_ry = [TraData.IK_ry(1,1); TraData.IK_ry(1,2); TraData.IK_ry(2,1); TraData.IK_ry(2,2)];%274-277
+            for i = 1:10
+                user_data.actor_dst_rlt_vel(i)= IkData.actor_dst_rlt_vel(i);%278-287
+            end
         end
 
         function resetImpl(obj)

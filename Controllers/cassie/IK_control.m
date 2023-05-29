@@ -47,6 +47,7 @@
         actor_dst_rlt = zeros(10,1);
         actor_dst_rlt_pre = zeros(10,1);
         actor_dst_rlt_vel = zeros(10,1);
+        flag_actor_vel_cal = zeros(10,1);
         xr_dst = 0;
         zr_dst = 0;
         pr_dst = 0;
@@ -601,14 +602,18 @@
                     obj.q8_pre = obj.q8;                     
                 end
                 for i = 1:10
-                    if abs(obj.actor_dst_rlt_pre(i)) < 1e-9
+                    if abs(obj.actor_dst_rlt_pre(i)) > 1e-9
+                        obj.flag_actor_vel_cal(i) = 1;
+                    end
+                    if abs(obj.flag_actor_vel_cal(i)) > 0.1
                         obj.actor_dst_rlt_vel(i) = (obj.actor_dst_rlt(i) - obj.actor_dst_rlt_pre(i))/obj.Ts;
+                    else
+                        obj.actor_dst_rlt_vel(i) = 0;                        
                     end
                     obj.actor_dst_rlt_pre(i) = obj.actor_dst_rlt(i);
-                    obj.actor_dst_rlt_vel(i) = 0;
                 end
                 for i = 1:10
-                     obj.out_current_cal(i) = obj.motor_p_gain(i)*(obj.actor_dst_rlt(i) - TraData.motor_position(i)) + obj.motor_d_gain(i)*(obj.actor_dst_rlt_vel(i) - TraData.motor_velocity(i));
+                     obj.out_current_cal(i) = obj.motor_p_gain(i)*(obj.actor_dst_rlt(i) - TraData.motor_position(i)) + obj.motor_d_gain(i)*(0.0 - TraData.motor_velocity(i));
                 end                
             end
             if ( abs(TraData.state_march_real - 1) < 0.1 || abs(TraData.state_march_real - 2) < 0.1 || ...
@@ -625,6 +630,7 @@
             IkOut.out_current_cal = obj.out_current_cal;
             IkOut.IK_target = [obj.IK1; obj.IK6; obj.xr_dst; obj.xl_dst; obj.q3; obj.q8; obj.zr_dst; obj.zl_dst; obj.pr_dst; obj.pl_dst];
             IkOut.temp = [obj.k_dcpl; obj.p_r_0; obj.p_l_0; obj.IK2; obj.IK7; obj.IK1_tgt;obj. IK6_tgt; obj.delta_yr;obj.delta_yl;0];
+            IkOut.actor_dst_rlt_vel = obj.actor_dst_rlt_vel;
             actor_dst_rlt = obj.actor_dst_rlt;
             out_tmp = [TraData.state_march_real;obj.delta_yt_move;obj.delta_yw_move;obj.yaw_num_inc;obj.inc_yaw]; 
         end

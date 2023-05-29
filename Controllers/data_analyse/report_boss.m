@@ -1,5 +1,5 @@
 close all;
-[~,num] = size(log_data.data);%86; 
+[row,num] = size(log_data.data);%86; 
 anc = 1;
 tt = log_data.data(10000:anc:end,num); 
 
@@ -34,7 +34,7 @@ title('right motor 3');
 subplot(2,5,4);
 plot(tt,log_data.data(10000:anc:end,32),...
     tt,Torque2Current(log_data.data(10000:anc:end,57),4),...
-   tt,log_data.data(10000:anc:end,42)/67*65);
+   tt,log_data.data(10000:anc:end,42));
 grid on;
 legend('dst (limited)','dst','real');
 xlabel('time (s)');
@@ -43,7 +43,7 @@ title('right motor 4');
 subplot(2,5,5);
 plot(tt,log_data.data(10000:anc:end,33),...
     tt,Torque2Current(log_data.data(10000:anc:end,58),5),...
-    tt,log_data.data(10000:anc:end,43) );
+    tt,log_data.data(10000:anc:end,43));
 grid on;
 legend('dst (limited)','dst','real');
 xlabel('time (s)');
@@ -83,7 +83,7 @@ title('left motor 3');
 subplot(2,5,9);
 plot(tt,log_data.data(10000:anc:end,37),...
     tt,Torque2Current(log_data.data(10000:anc:end,62),9),...
-    tt,log_data.data(10000:anc:end,47)/67*65);
+    tt,log_data.data(10000:anc:end,47));
 grid on;
 legend('dst (limited)','dst','real');
 xlabel('time (s)');
@@ -101,7 +101,6 @@ ylabel('current (A)');
 title('left motor 5');
 
 figure;
-
 subplot(3,5,1);
 yyaxis left
 plot(tt,log_data.data(10000:anc:end,1),'b-',...
@@ -390,5 +389,23 @@ ylabel('state');
 grid on;
 legend('zp','state');
 title('zp');  
+
+
+vel = zeros(row,10);
+Index = [1, 2, 3, 4, 7, 8, 9, 10, 11, 14];
+for i = 1:10
+    for j = 2:row
+        vel(j, i) = (log_data.data(j, Index(i)) -  log_data.data(j-1, Index(i)))*2000;
+        if log_data.data(j-1, Index(i)) == 0
+            vel(j, i) = 0;
+        end
+    end
+end
+figure;
+for i = 1:10
+    subplot(3,4,i);
+    plot(tt,vel(10000:anc:end, i), 'r-', ...
+        tt, log_data.data(10000:anc:end,14 + Index(i)), 'b-');
+end
 
 

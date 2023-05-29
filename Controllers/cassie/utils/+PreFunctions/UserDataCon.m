@@ -39,4 +39,5 @@ data_input.walk_xv_dst = 0;
 data_input.con_remote = zeros(10,1);
 data_input.battery = zeros(6,1);
 data_input.IK_ry = zeros(4,1);
+data_input.actor_dst_rlt_vel = zeros(10,1);
 end

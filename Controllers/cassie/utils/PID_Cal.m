@@ -69,7 +69,13 @@ function [pidOUT,pidPre] = PID_Cal(pidIN,Ts,pidPre,Index)
         end
         integral = Ival;
         %% P_value calculate
-        Pval = P_para*err;
+        Perr = err;
+%         if (abs(Perr) < deadzone)
+%             k_p = Perr/deadzone;  
+%         else
+            k_p = 1;
+%         end
+        Pval = k_p*P_para*Perr;
         if (abs(flag - 1) < 0.5) %right stance
             if Pval > 0
                 Pval = 0;

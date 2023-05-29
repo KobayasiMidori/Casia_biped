@@ -443,16 +443,16 @@
                 obj.motor_velocity_pas(3) = cassie_data.leftLeg.shinJoint.velocity;
                 obj.motor_velocity_pas(4) = cassie_data.leftLeg.tarsusJoint.velocity;
                 
-                obj.motor_real_current(1) = obj.motor_dir(1)*cassie_data.rightLeg.hipRollDrive.torque*obj.motor_rated_current(1);
+                obj.motor_real_current(1) = obj.motor_dir(1)*cassie_data.rightLeg.hipRollDrive.torque*65;%obj.motor_rated_current(1);
                 obj.motor_real_current(2) = obj.motor_dir(2)*cassie_data.rightLeg.hipYawDrive.torque*obj.motor_rated_current(2);
-                obj.motor_real_current(3) = obj.motor_dir(3)*cassie_data.rightLeg.hipPitchDrive.torque*obj.motor_rated_current(3);
-                obj.motor_real_current(4) = obj.motor_dir(4)*cassie_data.rightLeg.kneeDrive.torque*obj.motor_rated_current(4);
-                obj.motor_real_current(5) = obj.motor_dir(5)*cassie_data.rightLeg.footDrive.torque*obj.motor_rated_current(5);
-                obj.motor_real_current(6) = obj.motor_dir(6)*cassie_data.leftLeg.hipRollDrive.torque*obj.motor_rated_current(6);
+                obj.motor_real_current(3) = obj.motor_dir(3)*cassie_data.rightLeg.hipPitchDrive.torque*65;%*obj.motor_rated_current(3);
+                obj.motor_real_current(4) = obj.motor_dir(4)*cassie_data.rightLeg.kneeDrive.torque*65;%*obj.motor_rated_current(4);
+                obj.motor_real_current(5) = obj.motor_dir(5)*cassie_data.rightLeg.footDrive.torque*7.07;%*obj.motor_rated_current(5);
+                obj.motor_real_current(6) = obj.motor_dir(6)*cassie_data.leftLeg.hipRollDrive.torque*65;%obj.motor_rated_current(6);
                 obj.motor_real_current(7) = obj.motor_dir(7)*cassie_data.leftLeg.hipYawDrive.torque*obj.motor_rated_current(7);
-                obj.motor_real_current(8) = obj.motor_dir(8)*cassie_data.leftLeg.hipPitchDrive.torque*obj.motor_rated_current(8);
-                obj.motor_real_current(9) = obj.motor_dir(9)*cassie_data.leftLeg.kneeDrive.torque*obj.motor_rated_current(9);
-                obj.motor_real_current(10) = obj.motor_dir(10)*cassie_data.leftLeg.footDrive.torque*obj.motor_rated_current(10);                  
+                obj.motor_real_current(8) = obj.motor_dir(8)*cassie_data.leftLeg.hipPitchDrive.torque*65;%obj.motor_rated_current(8);
+                obj.motor_real_current(9) = obj.motor_dir(9)*cassie_data.leftLeg.kneeDrive.torque*65;%obj.motor_rated_current(9);
+                obj.motor_real_current(10) = obj.motor_dir(10)*cassie_data.leftLeg.footDrive.torque*7.07;%obj.motor_rated_current(10);                  
                 
                 obj.motor_voltage(1) = cassie_data.rightLeg.hipRollDrive.dcLinkVoltage;
                 obj.motor_voltage(2) = cassie_data.rightLeg.hipYawDrive.dcLinkVoltage;
