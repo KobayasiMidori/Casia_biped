@@ -1,4 +1,5 @@
- % add a user dialog to decide whether to save the recorded data
+ 
+% add a user dialog to decide whether to save the recorded data
 % recorded data file is named after the current time
 % MUST run setup.m before used
 

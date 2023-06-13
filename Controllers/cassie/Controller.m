@@ -94,7 +94,8 @@
                     pos_rota_pid, zv_pid, x_pitch_pid, y_roll_pid, ...                                                                              % pid_para
                     fre_roll, fre_pitch,...
                     obj.imu_roll_ref, obj.imu_pitch_ref, TraData.imu_yaw0, obj.xv_ref, obj.yv_ref, TraData.walk_p0, ...               % ref
-                    TraData.eulZYX, TraData.v_est, TraData.p_est, TraData.pos_rota, TraData.state_march_real); % real
+                    TraData.eulZYX, TraData.v_est, TraData.p_est, TraData.pos_rota, TraData.state_march_real,...
+                    TraData.s); % real
 
                 h_cen = 0.9;
                 obj.pid_out(4,15) = atan(obj.pid_out(4,15)/h_cen);

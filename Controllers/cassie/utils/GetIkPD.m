@@ -5,7 +5,9 @@ function [PIDval, PIDval_pre ,integral, errPre, filter_pre]...
         pos_rota_pid, zv_pid, x_pitch_pid, y_roll_pid,...
         fre_roll,fre_pitch,...
         imu_roll_ref, imu_pitch_ref, imu_yaw0, xv_ref, yv_ref, walk_p0, ...
-        eulZYX, v_est, p_est, pos_rota, state_march_real)
+        eulZYX, v_est, p_est, pos_rota, state_march_real,...
+        s)%serina
+    LIMIT_PID8_S = 0.6;
     %PID edit-------------------
     PIDval = zeros(4,20);
 %     pid_Ena = zeros(1,Num_pid);
@@ -44,18 +46,25 @@ function [PIDval, PIDval_pre ,integral, errPre, filter_pre]...
 %             pid_Ena(2) = -2;
 %             pid_Ena(5) = -2;
             pid_Ena(16) = -2;
+%              if s<LIMIT_PID8_S
+%                  pid_Ena(8) = 0;
+%             end
         elseif abs(state_march_real - 2) < 0.1  %left sw
             pid_Ena(6) = -2;
 %             pid_Ena(2) = -2;
 %             pid_Ena(5) = -2;
+
             pid_Ena(17) = -2;
+%             if s<LIMIT_PID8_S
+%                  pid_Ena(8) = 0;
+%             end
         end
       
         
         %% PID Calculate        
         %PID edit-------------------
         Ref =      [imu_pitch_ref,   imu_roll_ref,   imu_pitch_ref,   imu_pitch_ref,    imu_roll_ref,   imu_pitch_ref,   imu_roll_ref,   yv_ref,        walk_p0(2),   xv_ref,          walk_p0(1),    imu_yaw0,    imu_pitch_ref,   0.0,                    0.0,                     0.884,           0.884,           imu_pitch_ref,    imu_roll_ref,       0.0];
-        Fpb =     [eulZYX(2),         eulZYX(3),       eulZYX(2),        eulZYX(2),           eulZYX(3),      eulZYX(2),         eulZYX(3),      v_est(2),      p_est(2),       v_est(1),       p_est(1),         eulZYX(1),     eulZYX(2),       -1*pos_rota(1),    -1*pos_rota(2),    p_est(3),    p_est(3),    eulZYX(2),                  eulZYX(3),                    0.0];
+        Fpb =     [eulZYX(2),         eulZYX(3),       eulZYX(2),        eulZYX(2),           eulZYX(3),      eulZYX(2),         eulZYX(3),      v_est(2)+eulZYX(3)*0.2,      p_est(2),       v_est(1),       p_est(1),         eulZYX(1),     eulZYX(2),       -1*pos_rota(1),    -1*pos_rota(2),    p_est(3),    p_est(3),    eulZYX(2),                  eulZYX(3),                    0.0];
         P_para = [x_pid(1), z_pid(1), p_pid(1), x_pid(1), z_pid(1), p_pid(1), r_st_pid(1), yv_pid(1), yp_pid(1), xv_pid(1), xp_pid(1), yaw_pid(1), q3_pid(1), pos_rota_pid(1), pos_rota_pid(1), zv_pid(1), zv_pid(1), x_pitch_pid(1), y_roll_pid(1),   0.0];
         I_para =  [x_pid(2), z_pid(2), p_pid(2), x_pid(2), z_pid(2), p_pid(2), r_st_pid(2), yv_pid(2), yp_pid(2), xv_pid(2), xp_pid(2), yaw_pid(2), q3_pid(2), pos_rota_pid(2), pos_rota_pid(2), zv_pid(2), zv_pid(2), x_pitch_pid(2), y_roll_pid(2),   0.0];
         D_para = [x_pid(3), z_pid(3), p_pid(3), x_pid(3), z_pid(3), p_pid(3), r_st_pid(3), yv_pid(3), yp_pid(3), xv_pid(3), xp_pid(3), yaw_pid(3), q3_pid(3), pos_rota_pid(3), pos_rota_pid(3), zv_pid(3), zv_pid(3), x_pitch_pid(3), y_roll_pid(3),   0.0];
