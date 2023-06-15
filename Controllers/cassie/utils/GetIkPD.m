@@ -61,7 +61,7 @@ function [PIDval, PIDval_pre ,integral, errPre, filter_pre]...
         D_para = [x_pid(3), z_pid(3), p_pid(3), x_pid(3), z_pid(3), p_pid(3), r_st_pid(3), yv_pid(3), yp_pid(3), xv_pid(3), xp_pid(3), yaw_pid(3), q3_pid(3), pos_rota_pid(3), pos_rota_pid(3), zv_pid(3), zv_pid(3), x_pitch_pid(3), y_roll_pid(3),   0.0];
         %------------------------------   
         for i = 1:Num_pid
-            if i == 8
+            if i == 8% ||  i == 19
                 if abs(state_march_real-1) < 0.5 || abs(state_march_real-3) < 0.5 
                    stance_leg = -1;  %left stance
                 elseif abs(state_march_real-2) < 0.5 || abs(state_march_real-4) < 0.5     

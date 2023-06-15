@@ -43,29 +43,39 @@ function [pidOUT,pidPre] = PID_Cal(pidIN,Ts,pidPre,Index)
         else 
             Ierr = 0.0;
         end
+        if (abs(flag - 1) < 0.5) %right stance
+            if (-pid_sign)*Ierr > 0 
+                Ierr = 0;
+            end             
+        elseif (abs(flag - (-1)) < 0.5) %left stance
+            if (-pid_sign)*Ierr < 0
+                Ierr = 0;
+            end           
+        end        
+        
         Ival = I_para*Ierr*Ts+integral;  
         %integral limit
-        if (abs(flag - 1) < 0.5) %right stance
+        if ((abs(flag - 1) < 0.5) && (abs(pid_sign - (-1)) < 0.1)) || ((abs(flag - (-1)) < 0.5) && (abs(pid_sign - 1) < 0.1))%right stance
             if Ival < Ilim(1)
                 Ival = Ilim(1);
             end 
             if Ival > 0 
                 Ival = 0;
             end             
-        elseif (abs(flag - (-1)) < 0.5) %left stance
+        elseif ((abs(flag - (-1)) < 0.5)&& (abs(pid_sign - (-1)) < 0.1)) || ((abs(flag - 1) < 0.5) && (abs(pid_sign - 1) < 0.1)) %left stance
             if Ival < 0
                 Ival = 0;
             end 
             if Ival > Ilim(2) 
                 Ival = Ilim(2);
-            end             
+            end  
         else
             if Ival < Ilim(1)
                 Ival = Ilim(1);
             end 
             if Ival > Ilim(2) 
                 Ival = Ilim(2);
-            end    
+            end                
         end
         integral = Ival;
         %% P_value calculate
