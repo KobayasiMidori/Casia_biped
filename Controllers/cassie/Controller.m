@@ -69,8 +69,12 @@
                         imu_roll_ref_tgt = deg2rad(0.5);
                         imu_pitch_ref_tgt = deg2rad(-0.25);
                     else
-                        imu_roll_ref_tgt = imu_roll_dst;
-                        imu_pitch_ref_tgt = imu_pitch_dst;
+                        if TraData.step_cnt < 5
+                            imu_roll_ref_tgt = imu_roll_dst;
+                        else
+                            imu_roll_ref_tgt = 0;
+                        end
+                        imu_pitch_ref_tgt = imu_pitch_dst;                            
                     end
                     imu_slope = deg2rad(5);
                     obj.imu_roll_ref = Ramp(imu_roll_ref_tgt, obj.imu_roll_ref, imu_slope*obj.Ts);  %0.014 = 0.8¡£/s 
