@@ -319,7 +319,7 @@
                     else
 %                         if TraData.step_cnt < 5 || TraData.step_cnt > 15 
                             delta_yr_tgt = -2.7/180*pi;%-1.1/180*pi;
-                            delta_yl_tgt =  2.9/180*pi;%1.8 /180*pi;      %% 2.6！！2.9                            
+                            delta_yl_tgt =  3.0/180*pi;%1.8 /180*pi;      %% 2.6！！2.9                            
 %                         else
 %                             delta_yr_tgt = -2.7/180*pi;%-1.1/180*pi;
 %                             delta_yl_tgt = 3.0/180*pi;%1.8 /180*pi;    
