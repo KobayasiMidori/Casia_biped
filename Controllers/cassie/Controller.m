@@ -68,6 +68,9 @@
                     if abs(TraData.state_march_real) < 0.1
                         imu_roll_ref_tgt = deg2rad(0.5);
                         imu_pitch_ref_tgt = 0;
+                    elseif abs(TraData.state_march_real - 5) < 0.1
+                        imu_roll_ref_tgt = 0;
+                        imu_pitch_ref_tgt = 0;
                     else
                         imu_roll_ref_tgt = imu_roll_dst;
                         imu_pitch_ref_tgt = imu_pitch_dst;
