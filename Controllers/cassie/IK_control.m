@@ -452,12 +452,12 @@
                         end
                         %obj.IK1_tgt = obj.IK1_0 + pid_out(4,7) + obj.delta_yt_move;% - (pid_out(4,13)+pid_out(4,3))*TraData.walk_xzdir_w(1,1);
                         obj.IK1 = obj.IK1_0 + pid_out(4,7) + obj.delta_yt_move;%Ramp(obj.IK1_tgt, obj.IK1, deg2rad(25)/0.4*obj.Ts);
-                        bb = pid_out(4,8)+pid_out(4,9)+pid_out(4,15) + obj.delta_yl + obj.delta_yw_move - 0*obj.IK1 + pid_out(4,19) ;
+                        bb = pid_out(4,8)+pid_out(4,9)+ obj.delta_yl + obj.delta_yw_move - 0*obj.IK1 + pid_out(4,19) ;
                         sl_b = [obj.IK6_0,obj.IK6_0,bb,bb,bb,bb];  
                         obj.IK6_tgt = 0;%Ramp(- 0.8*TraData.eulZYX(3), obj.IK6_tgt, deg2rad(6)/0.2*obj.Ts);
                         obj.IK6 = bezier(sl_b,obj.ss) + obj.IK6_tgt;  
                         %------------------------------------
-                        aa = pid_out(4,10)+pid_out(4,14) + obj.delta_xl;
+                        aa = pid_out(4,10) + obj.delta_xl;
                         sl_a = [obj.x_l_0,obj.x_l_0,aa,aa,aa,aa];
                         obj.x_r = obj.x_r_0;
                         obj.x_l = bezier(sl_a,obj.ss);
@@ -493,12 +493,12 @@
                         end
                         %obj.IK6_tgt = obj.IK6_0 + pid_out(4,7) + obj.delta_yt_move;% - (pid_out(4,13)+pid_out(4,6))*TraData.walk_xzdir_w(1,2);
                         obj.IK6 = obj.IK6_0 + pid_out(4,7) + obj.delta_yt_move;%Ramp(obj.IK6_tgt, obj.IK6, deg2rad(25)/0.4*obj.Ts);                        
-                        bb = pid_out(4,8)+pid_out(4,9)+pid_out(4,15) + obj.delta_yr + obj.delta_yw_move - 0*obj.IK6 + pid_out(4,19);%-0.05/180*pi;
+                        bb = pid_out(4,8)+pid_out(4,9) + obj.delta_yr + obj.delta_yw_move - 0*obj.IK6 + pid_out(4,19);%-0.05/180*pi;
                         sl_b = [obj.IK1_0,obj.IK1_0,bb,bb,bb,bb];  
                         obj.IK1_tgt = 0;%Ramp( - 0.8*TraData.eulZYX(3), obj.IK1_tgt, deg2rad(6)/0.2*obj.Ts);
                         obj.IK1 = bezier(sl_b,obj.ss) + obj.IK1_tgt;
                         %-------------------------------------------------------
-                        aa = pid_out(4,10)+pid_out(4,14) + obj.delta_xr;
+                        aa = pid_out(4,10) + obj.delta_xr;
                         sl_a = [obj.x_r_0,obj.x_r_0,aa,aa,aa,aa];
                         obj.x_r = bezier(sl_a,obj.ss); 
                         obj.x_l = obj.x_l_0;
@@ -566,10 +566,10 @@
                     obj.tmp = Ramp(q3_dst, obj.tmp, deg2rad(5)*obj.Ts);
                     
                     obj.actor_dst_rlt(1) = obj.IK1 + TraData.IK_ry(1,1) + 0/180*pi;% 0.65
-                    obj.actor_dst_rlt(1) = Limit(obj.actor_dst_rlt(1), deg2rad(-15), deg2rad(6));
+                    obj.actor_dst_rlt(1) = Limit(obj.actor_dst_rlt(1), deg2rad(-14), deg2rad(6));
                     obj.actor_dst_rlt(2) = obj.IK2 + TraData.IK_ry(1,2);
                     obj.actor_dst_rlt(6) = obj.IK6 + TraData.IK_ry(2,1) + 0/180*pi;% 0.65
-                    obj.actor_dst_rlt(6) = Limit(obj.actor_dst_rlt(6), deg2rad(-6), deg2rad(15));
+                    obj.actor_dst_rlt(6) = Limit(obj.actor_dst_rlt(6), deg2rad(-6), deg2rad(14));
                     obj.actor_dst_rlt(7) = obj.IK7 + TraData.IK_ry(2,2);
                     obj.xr_dst = TraData.IK_dst(1) + pid_out(4,1) + obj.x_r;
                     obj.zr_dst = TraData.IK_dst(2)+pid_out(4,2) + obj.z_r + obj.delta_zr + roll_step;%

@@ -1,4 +1,4 @@
-function [pidOUT,pidPre] = PID_Cal(pidIN,Ts,pidPre,Index)
+function [pidOUT,pidPre] = PID_Cal(pidIN, delta_t,pidPre,Index)
     Ref = pidIN.Ref;
     Fpb = pidIN.Fpb;
     flag = pidIN.flag;
@@ -12,15 +12,18 @@ function [pidOUT,pidPre] = PID_Cal(pidIN,Ts,pidPre,Index)
     outLim = pidIN.outLim;
     pid_Ena = pidIN.Ena;
     pid_slop = pidIN.slop;
-
+    pid_TsN = pidIN.TsN;
+    
     errPre = pidPre.err;
     integral = pidPre.integral;
     DvalPre = pidPre.PIDval(3,:);
     valPre = pidPre.PIDval(4,:);
     LpfOutPre = pidPre.LpfOut;    
     NotInPre = pidPre.NotIn;
-    NotOutPre = pidPre.NotOut;    
-
+    NotOutPre = pidPre.NotOut;  
+    
+    Ts = pid_TsN*delta_t;
+    
     val = 0;
     
     if abs(pid_Ena - 1) < 0.1
@@ -52,7 +55,7 @@ function [pidOUT,pidPre] = PID_Cal(pidIN,Ts,pidPre,Index)
                 Ierr = 0;
             end           
         end        
-        
+
         Ival = I_para*Ierr*Ts+integral;  
         %integral limit
         if ((abs(flag - 1) < 0.5) && (abs(pid_sign - (-1)) < 0.1)) || ((abs(flag - (-1)) < 0.5) && (abs(pid_sign - 1) < 0.1))%right stance
@@ -95,7 +98,7 @@ function [pidOUT,pidPre] = PID_Cal(pidIN,Ts,pidPre,Index)
                 Pval = 0;
             end            
         end
-        
+
         %% D_value calculate
         if (errPre == 0)
             errPre = err;

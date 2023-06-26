@@ -389,7 +389,7 @@ grid on;
 legend('state','trajectory','ref','real');
 title('left foot p (base link)');  
 
-figure('name', 'pid');
+figure('name', 'pid1');
 label_name = {'rz (m)' , 'rp (rad)' , 'lp (rad)' , 'st\_motor1 (rad)' , 'st\_motor3 (rad)' , 'st\_motor2 (rad)' , 'sw\_y (m)' , 'sw\_x (m)' , 'sw\_x (m)' , 'sw\_y (m)' , 'rz (m)' , 'lz (m)'};
 title_name={'rz\_roll\_pid' , 'rp\_pitch\_pid' , 'lp\_pitch\_pid' , 'st\_roll\_pid' , 'st\_pitch\_pid' , 'st\_yaw\_pid' , 'sw\_yv\_pid' , 'sw\_xv\_pid' , 'swx\_pitch\_pid' , 'swy\_roll\_pid' , 'rz\_zv\_pid' , 'lz\_zv\_pid'};
 Index = [      2,                 3,               6,              7,               13,            12,          8,          10,              18,              19,          16,        17   ];
@@ -397,6 +397,22 @@ for i = 1:12
     subplot(3,4,i);
     yyaxis left;
     plot(tt,log_data.data(10000:anc:end,120+Index(i)),'b-'); 
+    xlabel('time (s)');
+    ylabel(label_name(i));   
+    yyaxis right;
+    plot(tt,log_data.data(10000:anc:end,114),'m-'); 
+    grid on;
+    title(title_name{i});
+end
+
+figure('name', 'pid2');
+label_name = {'roll ref (m)'};
+title_name={'roll\_ref\_pid'};
+Index = 14;
+for i = 1:1
+    subplot(3,4,i);
+    yyaxis left;
+    plot(tt,log_data.data(10000:anc:end,120+Index),'b-'); 
     xlabel('time (s)');
     ylabel(label_name(i));   
     yyaxis right;

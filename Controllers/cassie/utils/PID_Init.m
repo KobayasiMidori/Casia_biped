@@ -1,7 +1,8 @@
-function [dead_zone, limit, slop, sign] = PID_Init(Num_pid)
+function [dead_zone, limit, slop, sign, TsN] = PID_Init(Num_pid)
     dead_zone_val = zeros(1,Num_pid);
     limit_val = zeros(2,Num_pid);
     slop_val = zeros(1,Num_pid);
+    
     
     %                       =====================================================================
     %                       |        1          |          2          |        3         |         4          |          5          |        6          |           7          |
@@ -45,10 +46,12 @@ function [dead_zone, limit, slop, sign] = PID_Init(Num_pid)
     slop_val(:,16:19)=[           0.001,                     0.001,                    0.01,          deg2rad(2)            ];            
 
     sign_val = [-1,1,1,-1,-1,1,-1,-1,-1,-1,1,1,1,1,1,-1,-1,-1,1,    0.0];
+    TsN_val = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 20, 1, 1, 1, 1, 1,        0];
     
     dead_zone = dead_zone_val;
     limit = limit_val;
     slop = slop_val;
     sign = sign_val;    
+    TsN = TsN_val;
 end
 
