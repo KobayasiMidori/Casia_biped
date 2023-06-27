@@ -268,7 +268,7 @@ figure('name', 'imu');
 subplot(2,3,1);
 yyaxis left;
 plot(tt,180/pi*(log_data.data(10000:anc:end,84)),'b-',...
-        tt, zeros(length(tt),1),'r-');
+        tt, 180/pi*(log_data.data(10000:anc:end,134)) + 0.5,'r-');
 xlabel('time (s)');
 ylabel('angle (deg)');    
 yyaxis right;
@@ -412,7 +412,7 @@ Index = 14;
 for i = 1:1
     subplot(3,4,i);
     yyaxis left;
-    plot(tt,log_data.data(10000:anc:end,120+Index),'b-'); 
+    plot(tt,log_data.data(10000:anc:end,120+Index)*180/pi,'b-'); 
     xlabel('time (s)');
     ylabel(label_name(i));   
     yyaxis right;
@@ -584,6 +584,15 @@ subplot(3,5,14)
 plot(tt,log_data.data(10000:anc:end,103));legend('fk_l_F2');
 hold on;
 plot(tt,(log_data.data(10000:anc:end,114)-2)*100,'r-');
+
+figure;
+for i = 1:3
+    subplot(2,3,i);
+    plot(tt,log_data.data(10000:anc:end,93+i));
+    subplot(2,3,i+3);
+    plot(tt,log_data.data(10000:anc:end,103+i));    
+end
+
 
 
 

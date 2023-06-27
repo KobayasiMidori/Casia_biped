@@ -10,7 +10,7 @@ if sqrt(Fr(2)^2+Fr(1)^2)>300
 else
     onGroundIndR=0;
 end
-if sqrt(Fl(2)^2+Fl(1)^2)>150
+if sqrt(Fl(2)^2+Fl(1)^2)>200%150
     onGroundIndL=1;
 else
     onGroundIndL=0;

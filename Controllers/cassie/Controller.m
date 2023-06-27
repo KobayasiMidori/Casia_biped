@@ -46,12 +46,16 @@
         hold_val = zeros(1,14);
         pid_ena_val = zeros(1,14); 
         err_val = zeros(1,14); 
+        pid_val = zeros(1,14); 
     end
 
     methods(Access = protected)
         function setupImpl(obj)
             % Perform one-time calculations, such as computing constants         
-
+            obj.hold_val = zeros(1,14);
+            obj.pid_ena_val = zeros(1,14); 
+            obj.err_val = zeros(1,14); 
+            obj.pid_val = zeros(1,14); 
         end
 
         function [pid_out, closedloop_Ena, pid_tmp] = stepImpl(obj,TraData,x_pid, z_pid, p_pid, r_st_pid, yv_pid, yp_pid, xv_pid, xp_pid, yaw_pid, q3_pid, roll_ref_pid,zv_pid, x_pitch_pid, y_roll_pid, imu_roll_dst,imu_pitch_dst,fre_roll,fre_pitch)
@@ -92,7 +96,7 @@
                     end  
                 end 
                 % GetIkPD: pid out and pid ramp
-                [obj.pid_out, obj.pid_out_pre, obj.integral, obj.errPre, obj.filter_pre,obj.hold_val, obj.pid_ena_val, obj.err_val]...
+                [obj.pid_out, obj.pid_out_pre, obj.integral, obj.errPre, obj.filter_pre,obj.hold_val, obj.pid_ena_val, obj.err_val, obj.pid_val]...
                     = GetIkPD(...
                     obj.pid_out_pre, obj.integral, obj.errPre, obj.filter_pre, obj.closedloop_Ena, obj.Num_pid, obj.Ts,... % pre
                     x_pid, z_pid, p_pid, r_st_pid, yv_pid, yp_pid, xv_pid, xp_pid, yaw_pid, q3_pid, ... % pid_para
@@ -100,29 +104,29 @@
                     fre_roll, fre_pitch,...
                     obj.imu_roll_ref, obj.imu_pitch_ref, TraData.imu_yaw0, obj.xv_ref, obj.yv_ref, TraData.walk_p0, ...               % ref
                     TraData.eulZYX, TraData.v_est, TraData.p_est, TraData.pos_rota, TraData.state_march_real, obj.cnt_pid14); % real
-                if TraData.step_cnt > 1
+                if TraData.step_cnt > 2
                     if abs(obj.cnt_pid14 - 20) < 0.1
                         obj.cnt_pid14 = 1;
                     else
                         obj.cnt_pid14 = obj.cnt_pid14 + 1;
                     end
                 end
-                h_cen = 0.9;
-                obj.pid_out(4,15) = atan(obj.pid_out(4,15)/h_cen);
-                if abs(TraData.flag_march) < 0.1   % 原地踏步
-                    obj.pid_out(:,11) = zeros(4,1);
-                    obj.integral(11) = 0;
-                end
-                if abs(TraData.con_remote(5) - 1) < 0.5 || abs(TraData.con_remote(5) + 1) < 0.5 % turn
-                    obj.pid_out(:,9) = zeros(4,1); 
-                    obj.integral(9) = 0;                        
-                end
+%                 h_cen = 0.9;
+%                 obj.pid_out(4,15) = atan(obj.pid_out(4,15)/h_cen);
+%                 if abs(TraData.flag_march) < 0.1   % 原地踏步
+%                     obj.pid_out(:,11) = zeros(4,1);
+%                     obj.integral(11) = 0;
+%                 end
+%                 if abs(TraData.con_remote(5) - 1) < 0.5 || abs(TraData.con_remote(5) + 1) < 0.5 % turn
+%                     obj.pid_out(:,9) = zeros(4,1); 
+%                     obj.integral(9) = 0;                        
+%                 end
                 obj.state_march_real_pre = TraData.state_march_real;                   
             end  
            %%
             pid_out = obj.pid_out;
             closedloop_Ena = obj.closedloop_Ena;
-            pid_tmp = [obj.cnt_pid14,obj.hold_val(1,14),obj.pid_ena_val(1,14),obj.err_val(1,14)];
+            pid_tmp = [obj.cnt_pid14, obj.hold_val(1,14), obj.pid_ena_val(1,14), obj.err_val(1,14), obj.pid_val(1,14), obj.pid_val(1,14), obj.pid_out(4,14), obj.pid_out(4,14)];
             obj.pid_Ena_pre = TraData.con_remote(2);  %protect
         end
 
@@ -147,7 +151,7 @@
             %GETOUTPUTSIZEIMPL Get sizes of output ports.          
             out_1 = [4, 20];
             out_2 = [1, 1];
-            out_3 = [1, 4];
+            out_3 = [1, 8];
         end % getOutputSizeImpl
         
         function [out_1,out_2,out_3] = getOutputDataTypeImpl(~)
