@@ -58,7 +58,7 @@
             obj.pid_val = zeros(1,14); 
         end
 
-        function [pid_out, closedloop_Ena, pid_tmp] = stepImpl(obj,TraData,x_pid, z_pid, p_pid, r_st_pid, yv_pid, yp_pid, xv_pid, xp_pid, yaw_pid, q3_pid, roll_ref_pid,zv_pid, x_pitch_pid, y_roll_pid, imu_roll_dst,imu_pitch_dst,fre_roll,fre_pitch)
+        function [pid_out, roll_pitch_ref, closedloop_Ena, pid_tmp] = stepImpl(obj,TraData,x_pid, z_pid, p_pid, r_st_pid, yv_pid, yp_pid, xv_pid, xp_pid, yaw_pid, q3_pid, roll_ref_pid,zv_pid, x_pitch_pid, y_roll_pid, imu_roll_dst,imu_pitch_dst,fre_roll,fre_pitch)
             % Implement algorithm. Calculate y as a function of input u and
             % discrete states.
             % should in one file
@@ -77,8 +77,11 @@
                     if abs(TraData.state_march_real) < 0.1
                         imu_roll_ref_tgt = deg2rad(0.5);
                         imu_pitch_ref_tgt = deg2rad(-0.25);
+                    elseif abs(TraData.state_march_real-5) < 0.1
+                        imu_roll_ref_tgt = 0;
+                        imu_pitch_ref_tgt = imu_pitch_dst;
                     else
-                        imu_roll_ref_tgt = deg2rad(0.5);% + obj.pid_out(4, 14);
+                        imu_roll_ref_tgt = deg2rad(0.4) + obj.pid_out(4, 14);
                         imu_pitch_ref_tgt = imu_pitch_dst;                            
                     end
                     imu_slope = deg2rad(5);
@@ -125,6 +128,7 @@
             end  
            %%
             pid_out = obj.pid_out;
+            roll_pitch_ref = [obj.imu_roll_ref, obj.imu_pitch_ref];
             closedloop_Ena = obj.closedloop_Ena;
             pid_tmp = [obj.cnt_pid14, obj.hold_val(1,14), obj.pid_ena_val(1,14), obj.err_val(1,14), obj.pid_val(1,14), obj.pid_val(1,14), obj.pid_out(4,14), obj.pid_out(4,14)];
             obj.pid_Ena_pre = TraData.con_remote(2);  %protect
@@ -140,39 +144,44 @@
 %             name_2 = 'time';
 %         end % getInputNamesImpl
         
-        function [name_1,name_2,name_3] = getOutputNamesImpl(~)
+        function [name_1,name_2,name_3,name_4] = getOutputNamesImpl(~)
             %GETOUTPUTNAMESIMPL Return output port names for System block
             name_1 = 'pid_out';
-            name_2 = 'closedloop_Ena';
-            name_3 = 'pid_tmp';
+            name_2 = 'roll_pitch_ref';
+            name_3 = 'closedloop_Ena';
+            name_4 = 'pid_tmp';
         end % getOutputNamesImpl
         % PROPAGATES CLASS METHODS ============================================
-        function [out_1,out_2,out_3] = getOutputSizeImpl(~)
+        function [out_1,out_2,out_3,out_4] = getOutputSizeImpl(~)
             %GETOUTPUTSIZEIMPL Get sizes of output ports.          
             out_1 = [4, 20];
-            out_2 = [1, 1];
-            out_3 = [1, 8];
+            out_2 = [1, 2];
+            out_3 = [1, 1];
+            out_4 = [1, 8];
         end % getOutputSizeImpl
         
-        function [out_1,out_2,out_3] = getOutputDataTypeImpl(~)
+        function [out_1,out_2,out_3,out_4] = getOutputDataTypeImpl(~)
             %GETOUTPUTDATATYPEIMPL Get data types of output ports.         
             out_1 = 'double';
             out_2 = 'double';
             out_3 = 'double';
+            out_4 = 'double';
         end % getOutputDataTypeImpl
         
-        function [out_1,out_2,out_3] = isOutputComplexImpl(~) 
+        function [out_1,out_2,out_3,out_4] = isOutputComplexImpl(~) 
             %ISOUTPUTCOMPLEXIMPL Complexity of output ports.         
             out_1 = false;
             out_2 = false;
             out_3 = false;
+            out_4 = false;
         end % isOutputComplexImpl
         
-        function [out_1,out_2,out_3] = isOutputFixedSizeImpl(~)
+        function [out_1,out_2,out_3,out_4] = isOutputFixedSizeImpl(~)
             %ISOUTPUTFIXEDSIZEIMPL Fixed-size or variable-size output ports.
             out_1 = true;
             out_2 = true;
             out_3 = true;
+            out_4 = true;
         end % isOutputFixedSizeImpl
     end
      end

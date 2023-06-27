@@ -298,8 +298,8 @@
                         delta_xr_tgt = 0.021+0.025;
                         delta_xl_tgt = 0.021+0.025;                        
                     else
-                        delta_xr_tgt = 0.022+0.025-0.017;
-                        delta_xl_tgt = 0.022+0.025-0.017;                         
+                        delta_xr_tgt = 0.022+0.025-0.016;
+                        delta_xl_tgt = 0.022+0.025-0.016;                         
                     end
 
                     if abs(TraData.con_remote(4) - 1) < 0.5  %forward
