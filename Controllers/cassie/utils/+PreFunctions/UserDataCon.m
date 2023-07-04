@@ -40,4 +40,5 @@ data_input.con_remote = zeros(10,1);
 data_input.battery = zeros(6,1);
 data_input.IK_ry = zeros(4,1);
 data_input.actor_dst_rlt_vel = zeros(10,1);
+data_input.roll_pitch_ref = zeros(2,1);
 end

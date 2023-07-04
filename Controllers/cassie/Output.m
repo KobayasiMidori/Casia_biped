@@ -389,6 +389,7 @@
             for i = 1:10
                 user_data.actor_dst_rlt_vel(i)= IkData.actor_dst_rlt_vel(i);%278-287
             end
+            user_data.roll_pitch_ref = IkData.roll_pitch_ref;%288-289
         end
 
         function resetImpl(obj)

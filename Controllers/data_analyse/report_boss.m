@@ -268,7 +268,8 @@ figure('name', 'imu');
 subplot(2,3,1);
 yyaxis left;
 plot(tt,180/pi*(log_data.data(10000:anc:end,84)),'b-',...
-        tt, 180/pi*(log_data.data(10000:anc:end,134)) + 0.5,'r-');
+         tt, 180/pi*(log_data.data(10000:anc:end,288)),'r-');
+%         tt, 180/pi*(log_data.data(10000:anc:end,134)) + 0.5,'r-');
 xlabel('time (s)');
 ylabel('angle (deg)');    
 yyaxis right;
@@ -281,7 +282,8 @@ title('IMU roll');
 subplot(2,3,2);
 yyaxis left;
 plot(tt,180/pi*(log_data.data(10000:anc:end,85)),'b-',...
-        tt, zeros(length(tt),1),'r-');
+         tt, 180/pi*(log_data.data(10000:anc:end,289)),'r-');    
+%         tt, zeros(length(tt),1),'r-');
 xlabel('time (s)');
 ylabel('angle (deg)');    
 yyaxis right;
@@ -306,87 +308,87 @@ title('IMU yaw');
 
 figure('name', 'terminal');%4
 subplot(2,3,1);
-yyaxis right;
-plot(tt,log_data.data(10000:anc:end,114),'m-');
-ylabel('state');
 yyaxis left;
 plot(tt,log_data.data(10000:anc:end,107),'g-',...
         tt,log_data.data(10000:anc:end,201),'r-',...
         tt,log_data.data(10000:anc:end,87),'b-');
 xlabel('time (s)');
 ylabel('x (m)');  
-grid on;
-legend('state','trajectory','ref','real');
-title('right foot position x (base link)');    
-
-subplot(2,3,2);
 yyaxis right;
 plot(tt,log_data.data(10000:anc:end,114),'m-');
 ylabel('state');
+grid on;
+legend('trajectory','ref','real','state');
+title('right foot position x (base link)');    
+
+subplot(2,3,2);
 yyaxis left;
 plot(tt,log_data.data(10000:anc:end,108),'g-',...
         tt,log_data.data(10000:anc:end,205),'r-',...
         tt,log_data.data(10000:anc:end,88),'b-');
 xlabel('time (s)');
-ylabel('z (m)');  
-grid on;
-legend('state','trajectory','ref','real');
-title('right foot position z (base link)');  
-
-subplot(2,3,3);
+ylabel('z (m)'); 
 yyaxis right;
 plot(tt,log_data.data(10000:anc:end,114),'m-');
 ylabel('state');
+grid on;
+legend('trajectory','ref','real','state');
+title('right foot position z (base link)');  
+
+subplot(2,3,3);
 yyaxis left;
 plot(tt,log_data.data(10000:anc:end,109),'g-',...
         tt,log_data.data(10000:anc:end,207),'r-',...
         tt,log_data.data(10000:anc:end,89),'b-');
 xlabel('time (s)');
 ylabel('p (rad)');  
-grid on;
-legend('state','trajectory','ref','real');
-title('right foot p (base link)');  
-
-subplot(2,3,4);
 yyaxis right;
 plot(tt,log_data.data(10000:anc:end,114),'m-');
 ylabel('state');
+grid on;
+legend('trajectory','ref','real','state');
+title('right foot p (base link)');  
+
+subplot(2,3,4);
 yyaxis left;
 plot(tt,log_data.data(10000:anc:end,110),'g-',...
         tt,log_data.data(10000:anc:end,202),'r-',...
         tt,log_data.data(10000:anc:end,97),'b-');
 xlabel('time (s)');
 ylabel('x (m)');  
-grid on;
-legend('state','trajectory','ref','real');
-title('left foot position x (base link)');  
-
-subplot(2,3,5);
 yyaxis right;
 plot(tt,log_data.data(10000:anc:end,114),'m-');
 ylabel('state');
+grid on;
+legend('trajectory','ref','real','state');
+title('left foot position x (base link)');  
+
+subplot(2,3,5);
 yyaxis left;
 plot(tt,log_data.data(10000:anc:end,111),'g-',...
         tt,log_data.data(10000:anc:end,206),'r-',...
         tt,log_data.data(10000:anc:end,98),'b-');
 xlabel('time (s)');
-ylabel('z (m)');  
-grid on;
-legend('state','trajectory','ref','real');
-title('left foot position z (base link)');  
-
-subplot(2,3,6);
+ylabel('z (m)'); 
 yyaxis right;
 plot(tt,log_data.data(10000:anc:end,114),'m-');
 ylabel('state');
+grid on;
+legend('trajectory','ref','real','state');
+title('left foot position z (base link)');  
+
+subplot(2,3,6);
 yyaxis left;
 plot(tt,log_data.data(10000:anc:end,112),'g-',...
         tt,log_data.data(10000:anc:end,208),'r-',...
         tt,log_data.data(10000:anc:end,99),'b-');
 xlabel('time (s)');
-ylabel('p (rad)');  
+ylabel('p (rad)'); 
+yyaxis right;
+plot(tt,log_data.data(10000:anc:end,114),'m-');
+ylabel('state');
 grid on;
-legend('state','trajectory','ref','real');
+legend('trajectory','ref','real','state');
 title('left foot p (base link)');  
 
 figure('name', 'pid1');

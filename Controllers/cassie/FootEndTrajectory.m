@@ -212,23 +212,23 @@
             % Implement algorithm. Calculate y as a function of input u and
             % discrete states.
             % should in one file
-                % receive motor data
-                obj.motor_position(1) = obj.motor_dir(1)*cassie_data.rightLeg.hipRollDrive.position;   
-                obj.motor_position(2) = obj.motor_dir(2)*cassie_data.rightLeg.hipYawDrive.position;
-                obj.motor_position(3) = obj.motor_dir(3)*cassie_data.rightLeg.hipPitchDrive.position;
-                obj.motor_position(4) = obj.motor_dir(4)*cassie_data.rightLeg.kneeDrive.position;
-                obj.motor_position(5) = obj.motor_dir(5)*cassie_data.rightLeg.footDrive.position;
-                obj.motor_position(6) = obj.motor_dir(6)*cassie_data.leftLeg.hipRollDrive.position;
-                obj.motor_position(7) = obj.motor_dir(7)*cassie_data.leftLeg.hipYawDrive.position;
-                obj.motor_position(8) = obj.motor_dir(8)*cassie_data.leftLeg.hipPitchDrive.position;
-                obj.motor_position(9) = obj.motor_dir(9)*cassie_data.leftLeg.kneeDrive.position;
-                obj.motor_position(10) = obj.motor_dir(10)*cassie_data.leftLeg.footDrive.position;
-                if abs(cassie_data.rightLeg.shinJoint.position - obj.motor_position_pas(1)) < 1           
-                    obj.motor_position_pas(1) = cassie_data.rightLeg.shinJoint.position;
-                end
-                obj.motor_position_pas(2)  = cassie_data.rightLeg.tarsusJoint.position;
-                obj.motor_position_pas(3) = cassie_data.leftLeg.shinJoint.position;
-                obj.motor_position_pas(4)  = cassie_data.leftLeg.tarsusJoint.position;
+%                 % receive motor data
+%                 obj.motor_position(1) = obj.motor_dir(1)*cassie_data.rightLeg.hipRollDrive.position;   
+%                 obj.motor_position(2) = obj.motor_dir(2)*cassie_data.rightLeg.hipYawDrive.position;
+%                 obj.motor_position(3) = obj.motor_dir(3)*cassie_data.rightLeg.hipPitchDrive.position;
+%                 obj.motor_position(4) = obj.motor_dir(4)*cassie_data.rightLeg.kneeDrive.position;
+%                 obj.motor_position(5) = obj.motor_dir(5)*cassie_data.rightLeg.footDrive.position;
+%                 obj.motor_position(6) = obj.motor_dir(6)*cassie_data.leftLeg.hipRollDrive.position;
+%                 obj.motor_position(7) = obj.motor_dir(7)*cassie_data.leftLeg.hipYawDrive.position;
+%                 obj.motor_position(8) = obj.motor_dir(8)*cassie_data.leftLeg.hipPitchDrive.position;
+%                 obj.motor_position(9) = obj.motor_dir(9)*cassie_data.leftLeg.kneeDrive.position;
+%                 obj.motor_position(10) = obj.motor_dir(10)*cassie_data.leftLeg.footDrive.position;
+%                 if abs(cassie_data.rightLeg.shinJoint.position - obj.motor_position_pas(1)) < 1           
+%                     obj.motor_position_pas(1) = cassie_data.rightLeg.shinJoint.position;
+%                 end
+%                 obj.motor_position_pas(2)  = cassie_data.rightLeg.tarsusJoint.position;
+%                 obj.motor_position_pas(3) = cassie_data.leftLeg.shinJoint.position;
+%                 obj.motor_position_pas(4)  = cassie_data.leftLeg.tarsusJoint.position;
             %----------remote control------------------------------
             if abs(cassie_data.pelvis.remote.fail_safe) < 0.1  && abs(cassie_data.pelvis.remote.frame_lost) < 0.1
                 if cassie_data.pelvis.remote.op > 800

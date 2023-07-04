@@ -176,7 +176,7 @@
               obj.IK_limit_up(5) = -0.6;
         end
 
-        function [IkOut,actor_dst_rlt,out_tmp] = stepImpl(obj,TraData,pid_out,foot_pitch_step,roll_step,k_tgt, q3_dst)
+        function [IkOut,actor_dst_rlt,out_tmp] = stepImpl(obj,TraData,pid_out,foot_pitch_step,roll_step,k_tgt, q3_dst, roll_pitch_ref)
             % Implement algorithm. Calculate y as a function of input u and
             % discrete states.
             % should in one file          
@@ -292,11 +292,11 @@
                     
                     %---------------------walk-----------------------------
                     if abs(TraData.con_remote(4) - 1) < 0.5  %forward
-                        delta_xr_tgt = TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
-                        delta_xl_tgt = TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
+                        delta_xr_tgt = 0.022+0.025-0.016;%TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
+                        delta_xl_tgt = 0.022+0.025-0.016;%TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
                     elseif abs(TraData.con_remote(4) + 1) < 0.5 %backward
-                        delta_xr_tgt = 0.021+0.025;
-                        delta_xl_tgt = 0.021+0.025;                        
+                        delta_xr_tgt = 0.022+0.025-0.016;%0.021+0.025;
+                        delta_xl_tgt = 0.022+0.025-0.016;%0.021+0.025;                        
                     else
                         delta_xr_tgt = 0.022+0.025-0.016;
                         delta_xl_tgt = 0.022+0.025-0.016;                         
@@ -311,11 +311,11 @@
                     end                             
 
                     if abs(TraData.con_remote(4) - 1) < 0.5  %forward
-                        delta_yr_tgt  = -1.4/180*pi; 
-                        delta_yl_tgt = 2.1/180*pi; 
+                        delta_yr_tgt  = -2.7/180*pi;%-1.4/180*pi; 
+                        delta_yl_tgt = 3.3/180*pi;%2.1/180*pi; 
                     elseif abs(TraData.con_remote(4) + 1) < 0.5 %backward
-                        delta_yr_tgt = -1.1/180*pi;
-                        delta_yl_tgt = 2.1/180*pi;                         
+                        delta_yr_tgt = -2.7/180*pi;%-1.1/180*pi;
+                        delta_yl_tgt = 3.3/180*pi;%2.1/180*pi;                         
                     else
 %                         if TraData.step_cnt < 5 || TraData.step_cnt > 15 
                             delta_yr_tgt = -2.7/180*pi;%-1.1/180*pi;
@@ -631,6 +631,7 @@
             IkOut.IK_target = [obj.IK1; obj.IK6; obj.xr_dst; obj.xl_dst; obj.q3; obj.q8; obj.zr_dst; obj.zl_dst; obj.pr_dst; obj.pl_dst];
             IkOut.temp = [obj.k_dcpl; obj.p_r_0; obj.p_l_0; obj.IK2; obj.IK7; obj.IK1_tgt;obj. IK6_tgt; obj.delta_yr;obj.delta_yl;0];
             IkOut.actor_dst_rlt_vel = obj.actor_dst_rlt_vel;
+            IkOut.roll_pitch_ref = roll_pitch_ref';
             actor_dst_rlt = obj.actor_dst_rlt;
             out_tmp = [TraData.state_march_real;obj.delta_yt_move;obj.delta_yw_move;obj.yaw_num_inc;obj.inc_yaw]; 
         end

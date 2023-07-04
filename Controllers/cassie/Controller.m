@@ -81,7 +81,7 @@
                         imu_roll_ref_tgt = 0;
                         imu_pitch_ref_tgt = imu_pitch_dst;
                     else
-                        imu_roll_ref_tgt = deg2rad(0.4) + obj.pid_out(4, 14);
+                        imu_roll_ref_tgt = deg2rad(0.5) + obj.pid_out(4, 14);
                         imu_pitch_ref_tgt = imu_pitch_dst;                            
                     end
                     imu_slope = deg2rad(5);
