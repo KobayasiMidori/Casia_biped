@@ -292,8 +292,8 @@
                     
                     %---------------------walk-----------------------------
                     if abs(TraData.con_remote(4) - 1) < 0.5  %forward
-                        delta_xr_tgt = 0.022+0.025-0.016;%TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
-                        delta_xl_tgt = 0.022+0.025-0.016;%TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
+                        delta_xr_tgt = 0.022+0.025-0.018;%TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
+                        delta_xl_tgt = 0.022+0.025-0.018;%TraData.walk_xv_dst*0.0066 + 0.016 + 0.025;
                     elseif abs(TraData.con_remote(4) + 1) < 0.5 %backward
                         delta_xr_tgt = 0.022+0.025-0.016;%0.021+0.025;
                         delta_xl_tgt = 0.022+0.025-0.016;%0.021+0.025;                        
@@ -539,9 +539,9 @@
                         obj.IK7 = obj.IK7_0;
                         obj.q3 = obj.q3_0;
                         obj.q8 = obj.q8_0;
-                        if abs(TraData.state_march_real - 5) < 0.1%stop march
+                        if abs(TraData.state_march_real - 5) < 0.1%stop march                            
                             obj.x_r = Ramp(0.021, obj.x_r, 0.018/0.4*obj.Ts); %ÎªÁËÍ£Ö¹ÎÈ¶¨
-                            obj.x_l = Ramp(0.021, obj.x_l, 0.018/0.4*obj.Ts);
+                            obj.x_l = Ramp(0.021, obj.x_l, 0.018/0.4*obj.Ts);                           
                             obj.p_r = pid_out(4,3) + obj.p_r_0;
                             obj.p_l = pid_out(4,6) + obj.p_l_0;
                             obj.z_r = obj.z_r_0;

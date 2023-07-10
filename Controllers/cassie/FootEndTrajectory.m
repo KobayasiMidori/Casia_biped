@@ -244,7 +244,7 @@
                 elseif cassie_data.pelvis.remote.march < 500
                     obj.start_march = 0;      %stop march
                 end
-                if cassie_data.pelvis.remote.forward > 1400
+                if (cassie_data.pelvis.remote.forward > 1400) || (obj.step_cnt > 3 && obj.step_cnt < 9)
                     obj.forward = 1;      %forward
                 elseif cassie_data.pelvis.remote.forward < 500
                     obj.forward = -1;      %backward

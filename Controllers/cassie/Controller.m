@@ -81,8 +81,13 @@
                         imu_roll_ref_tgt = 0;
                         imu_pitch_ref_tgt = imu_pitch_dst;
                     else
-                        imu_roll_ref_tgt = deg2rad(0.5) + obj.pid_out(4, 14);
-                        imu_pitch_ref_tgt = imu_pitch_dst;                            
+                        if abs(TraData.con_remote(4) - 1) < 0.5
+                            imu_roll_ref_tgt = deg2rad(0.6) + obj.pid_out(4, 14);
+                            imu_pitch_ref_tgt = imu_pitch_dst ;         
+                        else
+                            imu_roll_ref_tgt = deg2rad(0.5) + obj.pid_out(4, 14);
+                            imu_pitch_ref_tgt = imu_pitch_dst;                              
+                        end
                     end
                     imu_slope = deg2rad(5);
                     obj.imu_roll_ref = Ramp(imu_roll_ref_tgt, obj.imu_roll_ref, imu_slope*obj.Ts);  %0.014 = 0.8¡£/s 
